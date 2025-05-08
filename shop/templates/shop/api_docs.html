@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+
+{% block title %}API Documentation{% endblock %}
+
+{% block content %}
+<div class="card shadow-lg border-0 mb-5">
+    <div class="card-header bg-dark text-white">
+        <h2 class="fw-bold mb-0">API Documentation</h2>
+    </div>
+    <div class="card-body bg-light">
+        <p class="fs-5">Use the endpoints below to interact with Caleb's eCommerce API via Postman or any HTTP client.</p>
+
+        <hr>
+
+        <h4 class="fw-bold text-dark">Authentication</h4>
+        <ul class="list-group list-group-flush mb-4">
+            <li class="list-group-item"><strong>Login:</strong> <code>/login/</code></li>
+            <li class="list-group-item"><strong>Register:</strong> <code>/register/</code></li>
+        </ul>
+
+        <h4 class="fw-bold text-dark">Stores</h4>
+        <ul class="list-group list-group-flush mb-4">
+            <li class="list-group-item"><strong>List Stores:</strong> <code>/api/stores/</code></li>
+            <li class="list-group-item"><strong>Create Store:</strong> <code>/api/stores/create/</code> <em>(POST)</em></li>
+            <li class="list-group-item"><strong>Products by Store Name:</strong> <code>/api/stores/&lt;store_name&gt;/products/</code></li>
+        </ul>
+
+        <h4 class="fw-bold text-dark">Products</h4>
+        <ul class="list-group list-group-flush mb-4">
+            <li class="list-group-item"><strong>Create Product:</strong> <code>/api/products/create/</code> <em>(POST)</em></li>
+        </ul>
+
+        <h4 class="fw-bold text-dark">Reviews</h4>
+        <ul class="list-group list-group-flush mb-4">
+            <li class="list-group-item"><strong>List All Reviews:</strong> <code>/api/reviews/</code></li>
+        </ul>
+
+        <hr>
+
+        <p class="text-muted mt-4">Use tools like <strong>Postman</strong> or <strong>cURL</strong> to make authenticated API calls. Ensure to include CSRF tokens or authentication headers where required.</p>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,56 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="container mt-5">
+    <h2 class="mb-4">Your Cart</h2>
+
+    {% if cart_items %}
+        <form method="post" action="{% url 'update_cart' 0 %}" id="update-form">
+            {% csrf_token %}
+            <table class="table table-bordered table-hover">
+                <thead class="thead-dark">
+                    <tr>
+                        <th>Product</th>
+                        <th>Price</th>
+                        <th>Quantity</th>
+                        <th>Subtotal</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for item in cart_items %}
+                    <tr>
+                        <td>{{ item.product.name }}</td>
+                        <td>${{ item.product.price }}</td>
+                        <td>
+                            <form method="post" action="{% url 'update_cart' item.product.id %}">
+                                {% csrf_token %}
+                                <input type="number" name="quantity" value="{{ item.quantity }}" min="1" class="form-control w-50 d-inline">
+                                <button type="submit" class="btn btn-sm btn-primary">Update</button>
+                            </form>
+                        </td>
+                        <td>${{ item.subtotal }}</td>
+                        <td>
+                            <form method="post" action="{% url 'update_cart' item.product.id %}">
+                                {% csrf_token %}
+                                <input type="hidden" name="quantity" value="0">
+                                <button type="submit" class="btn btn-sm btn-danger">Remove</button>
+                            </form>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            <div class="text-end">
+                <h4>Total: ${{ total }}</h4>
+                <a href="{% url 'checkout' %}" class="btn btn-success">Proceed to Checkout</a>
+                <a href="{% url 'clear_cart' %}" class="btn btn-outline-secondary">Clear Cart</a>
+            </div>
+        </form>
+    {% else %}
+        <p>Your cart is empty.</p>
+        <a href="{% url 'home' %}" class="btn btn-primary">Continue Shopping</a>
+    {% endif %}
+</div>
+{% endblock %}

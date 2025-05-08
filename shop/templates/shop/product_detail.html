@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container py-4">
+  <h2>{{ product.name }}</h2>
+  {% if product.image %}
+    <img src="{{ product.image.url }}" alt="{{ product.name }}" class="img-fluid mb-3">
+  {% endif %}
+  <p>{{ product.description }}</p>
+  <p><strong>Price:</strong> ${{ product.price }}</p>
+
+  <hr>
+  <h4>Reviews</h4>
+  {% for review in reviews %}
+    <div class="mb-3">
+      <strong>{{ review.user.username }}</strong> 
+      <span class="text-muted">({{ review.rating }}/5) 
+      {% if review.is_verified %}
+        <span class="badge bg-success">Verified</span>
+      {% else %}
+        <span class="badge bg-secondary">Unverified</span>
+      {% endif %}
+      </span>
+      <p>{{ review.comment }}</p>
+    </div>
+  {% empty %}
+    <p>No reviews yet.</p>
+  {% endfor %}
+
+  <hr>
+  <h5>Leave a Review</h5>
+  <form method="post">
+    {% csrf_token %}
+    <div class="mb-2">
+      <label>Rating:</label>
+      <select name="rating" class="form-select">
+        {% for i in "12345" %}
+          <option value="{{ forloop.counter }}">{{ forloop.counter }}</option>
+        {% endfor %}
+      </select>
+    </div>
+    <div class="mb-2">
+      <textarea name="comment" class="form-control" rows="3" placeholder="Write your review here..."></textarea>
+    </div>
+    <button type="submit" class="btn btn-primary">Submit Review</button>
+  </form>
+</div>
+{% endblock %}

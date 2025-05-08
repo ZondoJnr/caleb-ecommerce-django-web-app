@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<div class="container mt-4">
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <h2>{{ store.name }}</h2>
+        <a href="{% url 'view_cart' %}" class="btn btn-outline-primary">
+            🛒 Go to Cart
+        </a>
+    </div>
+
+    {% if store.description %}
+        <p class="text-muted">{{ store.description }}</p>
+    {% endif %}
+
+    <div class="row mt-4">
+        {% for product in products %}
+            <div class="col-md-4 mb-4">
+                <div class="card h-100 shadow-sm">
+                    {% if product.image %}
+                        <img src="{{ product.image.url }}" class="card-img-top" alt="{{ product.name }}">
+                    {% endif %}
+                    <div class="card-body d-flex flex-column">
+                        <h5 class="card-title">{{ product.name }}</h5>
+                        <p class="card-text">{{ product.description|truncatewords:20 }}</p>
+                        <p class="fw-bold">${{ product.price }}</p>
+                        <form method="post" action="{% url 'add_to_cart' product.id %}" class="mt-auto">
+                            {% csrf_token %}
+                            <button type="submit" class="btn btn-success btn-sm w-100">
+                                ➕ Add to Cart
+                            </button>
+                        </form>
+                        <a href="{% url 'product_detail' product.id %}" class="btn btn-outline-secondary btn-sm mt-2 w-100">
+                            View Product
+                        </a>
+                    </div>
+                </div>
+            </div>
+        {% empty %}
+            <p>This store has no products yet.</p>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

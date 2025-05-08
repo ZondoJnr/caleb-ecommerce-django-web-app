@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container py-4">
+  <h2 class="mb-4">My Products</h2>
+  <a href="{% url 'create_product' store.id %}" class="btn btn-success mb-3">Add New Product</a>
+  {% if products %}
+    <div class="row">
+      {% for product in products %}
+        <div class="col-md-4">
+          <div class="card shadow-sm mb-4 h-100">
+            {% if product.image %}
+              <img src="{{ product.image.url }}" class="card-img-top img-fluid" alt="{{ product.name }}" style="max-height: 200px; object-fit: cover;">
+            {% else %}
+              <img src="{% static 'images/no-image.png' %}" class="card-img-top img-fluid" alt="No Image" style="max-height: 200px; object-fit: cover;">
+            {% endif %}
+            <div class="card-body d-flex flex-column">
+              <h5 class="card-title">{{ product.name }}</h5>
+              <p class="card-text">{{ product.description|truncatewords:15 }}</p>
+              <p><strong>Price:</strong> ${{ product.price }}</p>
+              <div class="mt-auto">
+                <a href="{% url 'edit_product' store.id product.id %}" class="btn btn-primary btn-sm">Edit</a>
+                <form method="post" action="{% url 'delete_product' store.id product.id %}" class="d-inline">
+                  {% csrf_token %}
+                  <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+  {% else %}
+    <p>No products found. <a href="{% url 'create_product' store.id %}">Create your first product</a>.</p>
+  {% endif %}
+</div>
+{% endblock %}

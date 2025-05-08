@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+{% block title %}Vendor Dashboard{% endblock %}
+{% block content %}
+<div class="container mt-5">
+  <h2 class="mb-4 text-center">Welcome, {{ request.user.username }}</h2>
+
+  <div class="text-end mb-4">
+    <a href="{% url 'create_store' %}" class="btn btn-success">+ Create New Store</a>
+  </div>
+
+  {% if stores %}
+    <div class="row">
+      {% for store in stores %}
+        <div class="col-md-6">
+          <div class="card shadow-sm border-0 mb-4">
+            <div class="card-body">
+              <h4 class="card-title">{{ store.name }}</h4>
+              <p class="card-text">{{ store.description }}</p>
+              <a href="{% url 'edit_store' store.id %}" class="btn btn-primary btn-sm">Edit</a>
+              <a href="{% url 'delete_store' store.id %}" class="btn btn-danger btn-sm">Delete</a>
+              <a href="{% url 'manage_products' store.id %}" class="btn btn-dark btn-sm">Manage Products</a>
+            </div>
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+  {% else %}
+    <p class="text-muted">You haven’t created any stores yet.</p>
+  {% endif %}
+</div>
+{% endblock %}

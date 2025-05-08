@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+
+{% block title %}Welcome to Caleb's eCommerce{% endblock %}
+
+{% block content %}
+{% if not user.is_authenticated %}
+<div class="text-center my-5">
+    <h2 class="mb-3 fw-bold">Welcome to Caleb's eCommerce</h2>
+    <p class="lead text-muted mb-4">A seamless platform for Vendors and Buyers to connect, trade, and thrive.</p>
+    <div class="d-flex justify-content-center gap-3 flex-wrap">
+        <a href="{% url 'register' %}" class="btn btn-warning btn-lg px-4">Join Now</a>
+        <a href="{% url 'login' %}" class="btn btn-outline-dark btn-lg px-4">Login</a>
+    </div>
+</div>
+
+<hr class="my-5">
+
+<div class="row text-center">
+    <div class="col-md-6 mb-4">
+        <div class="card shadow-sm border-0 h-100">
+            <div class="card-body">
+                <h4 class="card-title fw-semibold mb-3">For Buyers</h4>
+                <p class="card-text text-muted">Browse a wide variety of products, add them to your cart, checkout securely, and leave reviews.</p>
+                <a href="{% url 'register' %}" class="btn btn-outline-warning mt-2">Start Shopping</a>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6 mb-4">
+        <div class="card shadow-sm border-0 h-100">
+            <div class="card-body">
+                <h4 class="card-title fw-semibold mb-3">For Vendors</h4>
+                <p class="card-text text-muted">Create a store, manage your products, and reach more customers with ease.</p>
+                <a href="{% url 'register' %}" class="btn btn-outline-warning mt-2">Manage Store</a>
+            </div>
+        </div>
+    </div>
+</div>
+{% else %}
+<script>
+    // Redirect authenticated users to their dashboards
+    window.location.href = "{% url 'buyer_dashboard' %}";
+</script>
+{% endif %}
+{% endblock %}

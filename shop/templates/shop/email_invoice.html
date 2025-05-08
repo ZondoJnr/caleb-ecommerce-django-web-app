@@ -1,0 +1,19 @@
+<!-- shop/templates/shop/email_invoice.html -->
+<html>
+  <body>
+    <h2>Invoice for Your Purchase</h2>
+
+    <p>Hello {{ user.first_name }},</p>
+    <p>Thank you for your order! Below is a summary of your purchase:</p>
+
+    <ul>
+      {% for product, details in cart.items %}
+        <li>{{ details.product.name }} - Quantity: {{ details.quantity }} - Price: {{ details.product.price }}</li>
+      {% endfor %}
+    </ul>
+
+    <p><strong>Total Price: {{ total_price }}</strong></p>
+
+    <p>We will process your order soon. Thank you for shopping with us!</p>
+  </body>
+</html>
